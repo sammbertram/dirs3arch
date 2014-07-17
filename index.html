@@ -71,11 +71,40 @@
 <li>Recursive brute forcing</li>
 <li>HTTP(S) proxy support</li>
 </ul><h2>
-<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
+<a name="examples" class="anchor" href="#examples"><span class="octicon octicon-link"></span></a>Examples</h2>
 
-<p>Copyright (C) Mauro Soria (maurosoria at gmail dot com)</p>
+<p><strong>Scan <a href="http://www.example.com/admin/">www.example.com/admin/</a> to find php files:</strong>
+<code>python dirs3arch.py -u http://www.example.com/admin/ -e php</code></p>
 
-<p>License: GNU General Public License, version 2</p>
+<p><strong>Scan <a href="http://www.example.com">www.example.com</a> to find asp and aspx files with SSL:</strong>
+<code>python dirs3arch.py -u https://www.example.com/ -e asp,aspx</code></p>
+
+<p><strong>Scan <a href="http://www.example.com">www.example.com</a> with an alternative dictionary (from DirBuster):</strong>
+<code>python dirs3arch.py -u http://www.example.com/ -e php -w db/dirbuster/directory-list-2.3-small.txt</code></p>
+
+<p><strong>Scan with HTTP proxy (localhost port 8080):</strong>
+<code>python dirs3arch.py -u http://www.example.com/admin/ -e php --http-proxy localhost:8080</code></p>
+
+<p><strong>Scan with custom User-Agent and custom header (Referer):</strong>
+<code>python dirs3arch.py -u http://www.example.com/admin/ -e php --user-agent "My User-Agent" --header "Referer: www.google.com"</code></p>
+
+<p><strong>Scan recursively:</strong>
+<code>python dirs3arch.py -u http://www.example.com/admin/ -e php -r</code></p>
+
+<p><strong>Scan recursively excluding server-status directory and 200 status codes:</strong>
+<code>python dirs3arch.py -u http://www.example.com/ -e php -r --exclude-subdir "server-status" --exclude-status 200</code></p>
+
+<p><strong>Scan includes, classes directories in /admin/</strong>
+<code>python dirs3arch.py -u http://www.example.com/admin/ -e php --scan-subdir "includes, classes"</code></p>
+
+<p><strong>Scan without following HTTP redirects:</strong>
+<code>python dirs3arch.py -u http://www.example.com/ -e php --no-follow-redirects</code></p>
+
+<p><strong>Scan VHOST "backend" at IP 192.168.1.1:</strong>
+<code>python dirs3arch.py -u http://backend/ --ip 192.168.1.1</code></p>
+
+<p><strong>Scan <a href="http://www.example.com">www.example.com</a> to find wordpress plugins:</strong>
+<code>python dirs3arch.py -u http://www.example.com/wordpress/wp-content/plugins/ -e php -w db/wordpress/plugins.txt</code></p>
 
 <h2>
 <a name="changelog" class="anchor" href="#changelog"><span class="octicon octicon-link"></span></a>Changelog</h2>
@@ -86,7 +115,12 @@
 <li>0.2.2 - 2014.7.2 Fixed some bugs, showing percentage of tested paths and added report generation feature</li>
 <li>0.2.1 - 2014.5.1 Fixed some bugs and added recursive option</li>
 <li>0.2.0 - 2014.1.31 Initial public release</li>
-</ul>
+</ul><h2>
+<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
+
+<p>Copyright (C) Mauro Soria (maurosoria at gmail dot com)</p>
+
+<p>License: GNU General Public License, version 2</p>
       </section>
     </div>
 
