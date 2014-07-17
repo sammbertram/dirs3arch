@@ -34,7 +34,7 @@
         <h1>
 <a name="dirs3arch" class="anchor" href="#dirs3arch"><span class="octicon octicon-link"></span></a>dirs3arch</h1>
 
-<p>Current Release: v0.2.3 (2014-7-7)</p>
+<p>Current Release: <a href="https://github.com/maurosoria/dirs3arch/releases/tag/v0.2.4">dirs3arch v0.2.4 (2014.7.17)</a></p>
 
 <h2>
 <a name="overview" class="anchor" href="#overview"><span class="octicon octicon-link"></span></a>Overview</h2>
@@ -42,17 +42,46 @@
 <p>dirs3arch is a simple command line tool designed to brute force directories and files in websites.</p>
 
 <h2>
+<a name="screenshots" class="anchor" href="#screenshots"><span class="octicon octicon-link"></span></a>Screenshots</h2>
+
+<p>Windows version:</p>
+
+<p><img src="https://cloud.githubusercontent.com/assets/1757675/3620617/a4c2e278-0e03-11e4-9f56-a46f7b52d7f6.png" alt="dirs3arch windows"></p>
+
+<p>Linux version:</p>
+
+<p><img src="https://cloud.githubusercontent.com/assets/1757675/3620618/a4cce58e-0e03-11e4-8eab-48c3a20eff85.png" alt="dirs3arch_linux"></p>
+
+<h2>
+<a name="operating-systems-supported" class="anchor" href="#operating-systems-supported"><span class="octicon octicon-link"></span></a>Operating Systems supported</h2>
+
+<ul>
+<li>Windows XP/7/8</li>
+<li>GNU/Linux</li>
+<li>MacOSX</li>
+</ul><h2>
 <a name="features" class="anchor" href="#features"><span class="octicon octicon-link"></span></a>Features</h2>
 
 <ul>
-<li>Keep alive connections</li>
 <li>Multithreaded</li>
+<li>Keep alive connections</li>
+<li>Support for multiple extensions (-e|--extensions asp,php)</li>
+<li>Reporting (plain text, JSON)</li>
 <li>Detect not found web pages when 404 not found errors are masked (.htaccess, web.config, etc).</li>
 <li>Recursive brute forcing</li>
+<li>HTTP(S) proxy support</li>
 </ul><h2>
+<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
+
+<p>Copyright (C) Mauro Soria (maurosoria at gmail dot com)</p>
+
+<p>License: GNU General Public License, version 2</p>
+
+<h2>
 <a name="changelog" class="anchor" href="#changelog"><span class="octicon octicon-link"></span></a>Changelog</h2>
 
 <ul>
+<li>0.2.4 - 2014.7.17 Added Windows support, --scan-subdir|--scan-subdirs argument added, --exclude-subdir|--exclude-subdirs added, --header argument added, dirbuster dictionaries added, fixed some concurrency bugs, MVC refactoring</li>
 <li>0.2.3 - 2014.7.7 Fixed some bugs, minor refactorings, exclude status switch, "pause/next directory" feature, changed help structure, expaded default dictionary</li>
 <li>0.2.2 - 2014.7.2 Fixed some bugs, showing percentage of tested paths and added report generation feature</li>
 <li>0.2.1 - 2014.5.1 Fixed some bugs and added recursive option</li>
