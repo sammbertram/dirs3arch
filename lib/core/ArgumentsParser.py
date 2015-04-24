@@ -36,8 +36,8 @@ class ArgumentsParser(object):
         if options.url == None:
             print 'Url target is missing'
             exit(0)
-        if options.extensions == None:
-            print 'No extension specified. You must specify at least one extension'
+        if options.wordlist == None:
+            print 'Wordlist is missing'
             exit(0)
         with File(options.wordlist) as wordlist:
             if not wordlist.exists():
@@ -66,7 +66,12 @@ class ArgumentsParser(object):
         else:
             self.headers = {}
         self.url = options.url
-        self.extensions = list(oset([extension.strip() for extension in options.extensions.split(',')]))
+
+        # if there are extension options, split them; otherwise just request the default resource
+        if options.extensions and len(options.extensions) > 0:
+            self.extensions = list(oset([extension.strip() for extension in options.extensions.split(',')]))
+        else: self.extensions = ['']
+
         self.useragent = options.useragent
         self.cookie = options.cookie
         if options.threadsCount < 1:
@@ -148,7 +153,7 @@ class ArgumentsParser(object):
         # Mandatory arguments
         mandatory = OptionGroup(parser, 'Mandatory')
         mandatory.add_option('-u', '--url', help='URL target', action='store', type='string', dest='url', default=None)
-        mandatory.add_option('-e', '--extensions', help='Extension list separated by comma (Example: php, asp)',
+        mandatory.add_option('-e', '--extensions', help='Extension list separated by comma (Example: .php, .asp)',
                              action='store', dest='extensions', default=None)
 
         connection = OptionGroup(parser, 'Connection Settings')
@@ -163,8 +168,7 @@ class ArgumentsParser(object):
 
         # Dictionary settings
         dictionary = OptionGroup(parser, 'Dictionary Settings')
-        dictionary.add_option('-w', '--wordlist', action='store', dest='wordlist',
-                              default=self.wordlist)
+        dictionary.add_option('-w', '--wordlist', action='store', dest='wordlist')
         dictionary.add_option('-l', '--lowercase', action='store_true', dest='lowercase', default=self.lowercase)
 
         # Optional Settings

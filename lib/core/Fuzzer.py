@@ -51,9 +51,8 @@ class Fuzzer(object):
     def testersSetup(self):
         if len(self.testers) != 0:
             self.testers = {}
-        self.testers['/'] = NotFoundTester(self.requester, '{0}/'.format(self.testFailPath))
         for extension in self.dictionary.extensions:
-            self.testers[extension] = NotFoundTester(self.requester, '{0}.{1}'.format(self.testFailPath, extension))
+            self.testers[extension] = NotFoundTester(self.requester, '{0}{1}'.format(self.testFailPath, extension))
 
     def threadsSetup(self):
         if len(self.threads) != 0:
@@ -67,8 +66,6 @@ class Fuzzer(object):
         for extension in self.testers.keys():
             if path.endswith(extension):
                 return self.testers[extension]
-        # By default, returns folder tester
-        return self.testers['/']
 
     def start(self):
         # Setting up testers

@@ -86,8 +86,9 @@ class Requester(object):
             if self.proxy is not None:
                 return self.connectionWithProxy()
             if self.protocol == 'https':
+                # changed due to TLS connections in kali 1.0.9, OpenSSL 1.0.1e 11 Feb 2013
                 self.pool = HTTPSConnectionPool(self.ip, port=self.port, timeout=self.timeout, maxsize=self.maxPool,
-                                                block=True, cert_reqs='CERT_NONE', assert_hostname=False)
+                                                block=True, cert_reqs='CERT_NONE', assert_hostname=False, ssl_version="TLSv1")
             else:
                 self.pool = HTTPConnectionPool(self.ip, port=self.port, timeout=self.timeout, maxsize=self.maxPool,
                                                block=True)
@@ -106,10 +107,12 @@ class Requester(object):
         while i <= self.maxRetries:
             try:
                 if self.proxy is None:
-                    url = '{0}{1}?{2}'.format(self.basePath, path, params)
+                    if params: url = '{0}{1}?{2}'.format(self.basePath, path, params)
+                    else: url = '{0}{1}'.format(self.basePath, path)
                 else:
-                    url = '{5}://{3}:{4}{0}{1}?{2}'.format(self.basePath, path, params, self.host, self.port,
-                                                           self.protocol)
+                    if params: url = '{5}://{3}:{4}{0}{1}?{2}'.format(self.basePath, path, params, self.host, self.port, self.protocol)
+                    else: url = '{4}://{2}:{3}{0}{1}'.format(self.basePath, path, self.host, self.port, self.protocol)
+
                 response = self.connection.urlopen(method, url, headers=self.headers, redirect=self.redirect,
                                                    assert_same_host=False)
                 result = Response(response.status, response.reason, response.headers, response.data)

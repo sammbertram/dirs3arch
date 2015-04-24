@@ -84,16 +84,16 @@ class Controller(object):
 
     def getBlacklists(self):
         blacklists = {}
-        for status in [400, 403, 500]:
-            blacklistFileName = FileUtils.buildPath(self.script_path, "db")
-            blacklistFileName = FileUtils.buildPath(blacklistFileName, "{0}_blacklist.txt".format(status))
-            if not FileUtils.canRead(blacklistFileName):
-                continue
-            blacklists[status] = []
-            for line in FileUtils.getLines(blacklistFileName):
-                # Skip comments
-                if line.startswith("#"): continue
-                blacklists[status].append(line)
+#        for status in [400, 403, 500]:
+#            blacklistFileName = FileUtils.buildPath(self.script_path, "db")
+#            blacklistFileName = FileUtils.buildPath(blacklistFileName, "{0}_blacklist.txt".format(status))
+#            if not FileUtils.canRead(blacklistFileName):
+#                continue
+#            blacklists[status] = []
+#            for line in FileUtils.getLines(blacklistFileName):
+#                # Skip comments
+#                if line.startswith("#"): continue
+#                blacklists[status].append(line)
         return blacklists
 
     def setupReports(self, requester):

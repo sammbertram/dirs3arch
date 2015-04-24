@@ -88,6 +88,7 @@ class FileUtils(object):
 
     @staticmethod
     def read(fileName):
+        print 'ready'
         result = ''
         with open(fileName, 'r') as fd:
             for line in fd.readlines():
@@ -98,7 +99,9 @@ class FileUtils(object):
     def getLines(fileName):
         with open(fileName, 'r') as fd:
             for line in fd.readlines():
-                yield line.replace('\n', '')
+                line = line.replace('\n','')
+                line = line.replace('\r','')
+                yield line
 
     @staticmethod
     def isDir(fileName):

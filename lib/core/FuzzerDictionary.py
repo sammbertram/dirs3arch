@@ -58,10 +58,11 @@ class FuzzerDictionary(object):
             # Skip comments
             entry = line
             if line.startswith("#"): continue
-            if '%EXT%' in line:
-                for extension in self._extensions:
-                    entry = (line.replace('%EXT%', extension))
-            self.entries.append(urllib.quote(entry))
+
+            for extension in self._extensions:
+                entry = line + extension
+                self.entries.append(urllib.quote(entry))
+
         if lowercase == True:
             self.entries = list(oset([entry.lower() for entry in self.entries]))
 

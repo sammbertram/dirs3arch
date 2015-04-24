@@ -32,6 +32,8 @@ License: GNU General Public License, version 2
 
 Changelog
 ---------
+- 0.2.7 - 2014.11.05 Added "TLSv1" connection for default HTTPS connections. Changed extension handling so all extensions are simply appended to the end of the requested resource. Removed 'db' folder. Don't require an extension to be specified (defaults to brute force the resource directly). Check for 'params' value so that a ? is not included in all requested resources. 
+- FORK  -
 - 0.2.6 - 2014.9.12 Fixed bug when dictionary size is greater than threads count. Fixed URL encoding bug (issue2).
 - 0.2.5 - 2014.9.2 Shows Content-Length in output and reports, added default.conf file (for setting defaults) and report auto save feature added.
 - 0.2.4 - 2014.7.17 Added Windows support, --scan-subdir|--scan-subdirs argument added, --exclude-subdir|--exclude-subdirs added, --header argument added, dirbuster dictionaries added, fixed some concurrency bugs, MVC refactoring
