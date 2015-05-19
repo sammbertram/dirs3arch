@@ -101,18 +101,20 @@ class CLIOutput(object):
             if path in self.checkedPaths:
                 self.mutexCheckedPaths.release()
                 return
-        except (KeyboardInterrupt, SystemExit), e:
+        except (KeyboardInterrupt, SystemExit) as e:
             raise e
         finally:
             self.mutexCheckedPaths.release()
 
         if status == 200:
-            message = Style.BRIGHT + Fore.GREEN + message + Style.RESET_ALL
+            message = Fore.GREEN + message + Style.RESET_ALL
         elif status == 403:
-            message = Style.BRIGHT + Fore.BLUE + message + Style.RESET_ALL
+            message = Fore.BLUE + message + Style.RESET_ALL
+        elif status == 401:
+            message = Fore.YELLOW + message + Style.RESET_ALL
         # Check if redirect
         elif status in [301, 302, 307] and 'location' in response.headers:
-            message = Style.BRIGHT + Fore.CYAN + message + Style.RESET_ALL
+            message = Fore.CYAN + message + Style.RESET_ALL
             message += '  ->  {0}'.format(response.headers['location'])
 
         self.printNewLine(message)
@@ -142,4 +144,20 @@ class CLIOutput(object):
         message = Style.BRIGHT + Fore.MAGENTA + text + Style.RESET_ALL
         self.printNewLine(message)
 
+    def printConfig(self, extensions, threads, wordlistSize):
+        separator = Fore.MAGENTA + ' | ' + Fore.YELLOW
+        config =  Style.BRIGHT + Fore.YELLOW
+        config += 'Extensions: {0}'.format(Fore.CYAN + extensions + Fore.YELLOW)
+        config += separator
+        config += 'Threads: {0}'.format(Fore.CYAN + threads + Fore.YELLOW)
+        config += separator
+        config += 'Wordlist size: {0}'.format(Fore.CYAN + wordlistSize + Fore.YELLOW)
+        config += Style.RESET_ALL
+        self.printNewLine(config)
+
+    def printTarget(self, target):
+        config =  Style.BRIGHT + Fore.YELLOW
+        config += '\nTarget: {0}\n'.format(Fore.CYAN + target + Fore.YELLOW)
+        config += Style.RESET_ALL
+        self.printNewLine(config)
 
