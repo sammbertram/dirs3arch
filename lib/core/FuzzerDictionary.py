@@ -18,7 +18,7 @@
 
 
 import threading
-import urllib
+import urllib.request, urllib.parse, urllib.error
 from lib.utils.FileUtils import File
 from thirdparty.oset import *
 
@@ -76,13 +76,13 @@ class FuzzerDictionary(object):
             result = self.entries[self.currentIndex]
         except IndexError:
             self.condition.release()
-            return None, None
+            raise StopIteration
         self.currentIndex = self.currentIndex + 1
         currentIndex = self.currentIndex
         self.condition.release()
         return currentIndex, result
 
-    def next(self, basePath=None):
+    def __next__(self, basePath=None):
         _, path = self.nextWithIndex(basePath)
         return path
 

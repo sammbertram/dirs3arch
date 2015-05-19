@@ -21,11 +21,11 @@ import logging
 import sys
 import signal
 from lib.utils.Queue import Queue
-from Path import *
+from .Path import *
 from lib.connection import *
-from FuzzerDictionary import *
-from NotFoundTester import *
-from ReportManager import *
+from .FuzzerDictionary import *
+from .NotFoundTester import *
+from .ReportManager import *
 from lib.reports import *
 import threading
 import time
@@ -63,7 +63,7 @@ class Fuzzer(object):
             self.threads.append(newThread)
 
     def getTester(self, path):
-        for extension in self.testers.keys():
+        for extension in list(self.testers.keys()):
             if path.endswith(extension):
                 return self.testers[extension]
 
@@ -112,7 +112,11 @@ class Fuzzer(object):
         self.finishedEvent.set()
 
     def getPath(self):
-        path = (self.testedPaths.get() if not self.empty() or not self.isFinished() else None)
+        path = None
+        if not self.empty():
+            path = self.testedPaths.get()  
+        if not self.isFinished():
+            path = self.testedPaths.get()  
         return path
 
     def qsize(self):
@@ -124,29 +128,36 @@ class Fuzzer(object):
     def isFinished(self):
         return self.runningThreadsCount == 0
 
+    def stopThread(self):
+        self.runningThreadsCount -= 1
+        if self.runningThreadsCount is 0:
+            self.testedPaths.put(None)
+
     def thread_proc(self):
+
         self.playEvent.wait()
         try:
-            path = self.dictionary.next()
+            path = next(self.dictionary)
             while path is not None:
                 try:
                     status, response = self.testPath(path)
                     self.testedPaths.put(Path(path=path, status=status, response=response))
-                except RequestException, e:
-                    print '\nUnexpected error:\n{0}\n'.format(e.args[0]['message'])
+                except RequestException as e:
+                    print('\nUnexpected error:\n{0}\n'.format(e.args[0]['message']))
                     sys.stdout.flush()
                     continue
                 finally:
-                    path = self.dictionary.next()
                     if not self.playEvent.isSet():
                         self.pausedSemaphore.release()
                         self.playEvent.wait()
+                    path = next(self.dictionary) # Raises StopIteration when finishes
                     if not self.running:
-                        self.runningThreadsCount -= 1
                         break
-                    if path is None:
-                        self.runningThreadsCount -= 1
-        except KeyboardInterrupt, SystemExit:
-            pass
+        except StopIteration:
+            return
+        finally:
+            self.stopThread()
+
+
 
 
