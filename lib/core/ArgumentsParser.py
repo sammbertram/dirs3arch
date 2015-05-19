@@ -34,10 +34,10 @@ class ArgumentsParser(object):
         self.parseConfig()
         options = self.parseArguments()
         if options.url == None:
-            print 'Url target is missing'
+            print('Url target is missing')
             exit(0)
         if options.wordlist == None:
-            print 'Wordlist is missing'
+            print('Wordlist is missing')
             if options.urlList != None:
                 with File(options.urlList) as urlList:
                     if not urlList.exists():

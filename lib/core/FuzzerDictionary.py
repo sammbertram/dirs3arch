@@ -61,7 +61,7 @@ class FuzzerDictionary(object):
 
             for extension in self._extensions:
                 entry = line + extension
-                self.entries.append(urllib.quote(entry))
+                self.entries.append(urllib.parse.quote(entry))
 
         if lowercase == True:
             self.entries = list(oset([entry.lower() for entry in self.entries]))

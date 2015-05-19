@@ -88,7 +88,7 @@ class FileUtils(object):
 
     @staticmethod
     def read(fileName):
-        print 'ready'
+        print('ready')
         result = ''
         with open(fileName, 'r') as fd:
             for line in fd.readlines():
